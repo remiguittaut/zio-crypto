@@ -1,12 +1,12 @@
 package zio.crypto.mac
 
+import java.nio.charset.StandardCharsets.US_ASCII
+
 import zio._
 import zio.crypto.keyset.KeysetManager
 import zio.random.Random
 import zio.test.Assertion._
 import zio.test._
-
-import java.nio.charset.StandardCharsets.US_ASCII
 
 object HMACSpec extends DefaultRunnableSpec {
   private val assertCompletesM                                  = assertM(UIO.succeed(true))(isTrue)
@@ -49,7 +49,7 @@ object HMACSpec extends DefaultRunnableSpec {
               hmac     <- HMAC.sign(m1, k, US_ASCII)
               verified <- HMAC.verify(m0, hmac, k, US_ASCII)
             } yield assert(verified)(isFalse)
-          case _ => assertCompletesM
+          case _                    => assertCompletesM
         }
       }
     ),
@@ -89,7 +89,7 @@ object HMACSpec extends DefaultRunnableSpec {
               hmac     <- HMAC.sign(m1, k)
               verified <- HMAC.verify(m0, hmac, k)
             } yield assert(verified)(isFalse)
-          case _ => assertCompletesM
+          case _                    => assertCompletesM
         }
       }
     )
